@@ -7,7 +7,7 @@ class Game:
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption('The Legend of Byte')
         self.clock = pygame.time.Clock()
-        self.level = Level()
+        self.level = Level(self.screen)
     def run(self):
         while True:
             for event in pygame.event.get():
