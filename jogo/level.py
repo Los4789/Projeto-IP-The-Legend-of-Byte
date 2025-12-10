@@ -1,6 +1,13 @@
+import pygame
+from ui import UI
+from coletaveis import Coletavel
+from player import Player
+from configuracao import *
+
 class Level:
-    def __init__(self):
-        self.display_surface = pygame.display.get_surface()
+    def __init__(self, surface):
+        self.display_surface = surface 
+        
         self.visible_sprites = pygame.sprite.Group()
         self.collectible_sprites = pygame.sprite.Group()
         
