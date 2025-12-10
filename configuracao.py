@@ -2,7 +2,7 @@ WIDTH = 1280
 HEIGHT = 720
 FPS = 60
 TILESIZE = 64
-UI_FONT = 'graphics/font/joystix.ttf'
+UI_FONT = None
 UI_FONT_SIZE = 18
 TEXT_COLOR = '#eeeeee'
 
