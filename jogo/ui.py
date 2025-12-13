@@ -7,7 +7,7 @@ class UI:
         self.font = pygame.font.Font(UI_FONT, UI_FONT_SIZE)
     def show_score(self, score_data, time_left_seconds):
         individual_counts_surface = self.font.render(
-            f'Moedas: {score_data["moeda"]/ScoreDefault} | Estrelas: {score_data["estrela"]/ScoreDefault} | Joias: {score_data["joia"]/ScoreJoia}', 
+            f'Moedas: {int(score_data["moeda"]/ScoreDefault)} | Estrelas: {int(score_data["estrela"]/ScoreDefault)} | Joias: {int(score_data["joia"]/ScoreJoia)}', 
             False, 
             TEXT_COLOR
         )
