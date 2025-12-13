@@ -60,7 +60,15 @@ class Level:
             'joia': 0
         }
         self.ui = UI()
-        
+        self.sfx = {
+            'moeda': pygame.mixer.Sound('sound/coin.ogg'),
+            'estrela': pygame.mixer.Sound('sound/star.ogg'),
+            'joia': pygame.mixer.Sound('sound/diamond.ogg')
+        }
+        # Ajustar volume dos efeitos, se necessário (0.0 a 1.0)
+        for sound in self.sfx.values():
+            sound.set_volume(0.5)
+
     def create_map(self):
         for row_index, row in enumerate(self.game_map):
             for col_index, cell in enumerate(row):
@@ -105,6 +113,8 @@ class Level:
         for collectible in self.collectible_sprites:
           if collectible.rect.colliderect(self.player.hitbox): 
             c_type = collectible.type
+            if c_type in self.sfx:
+                self.sfx[c_type].play()
             if c_type == 'moeda': # Adiciona 10s ao timer
                 self.score[c_type] += 500 # Adiciona 500 pontos padrão
                 time_event = pygame.event.Event(ADD_TIME_EVENT, {'amount': TIME_MOEDA_MS})
