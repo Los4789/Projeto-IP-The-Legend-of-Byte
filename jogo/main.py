@@ -85,7 +85,7 @@ class Game:
                     self.screen.blit(score_surface, score_rect)
                 restart_text = 'Pressione R para reiniciar'
                 restart_surface = self.font.render(restart_text, True, TEXT_COLOR)
-                restart_rect = restart_surface.get_rect(bottomleft=(10, HEIGHT - 10))
+                restart_rect = restart_surface.get_rect(bottomleft=(5, HEIGHT - 5))
                 pygame.draw.rect(self.screen, 'black', restart_rect.inflate(10, 10), 0, 5)
                 self.screen.blit(restart_surface, restart_rect)
             pygame.display.update()
