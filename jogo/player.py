@@ -34,8 +34,9 @@ class Player(pygame.sprite.Sprite):
             self.frame_index = 0
         self.image = animation[int(self.frame_index)]
         self.rect.center = self.hitbox.center
-    def input(self):
+  def input(self):
         keys = pygame.key.get_pressed()
+        
         self.direction.y = 0
         self.direction.x = 0
         if keys[pygame.K_UP] or keys[pygame.K_w]:
@@ -43,19 +44,17 @@ class Player(pygame.sprite.Sprite):
             self.status = 'north_run'
         elif keys[pygame.K_DOWN] or keys[pygame.K_s]:
             self.direction.y = 1
-            self.status = 'south_run'  
+            self.status = 'south_run'
         if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
             self.direction.x = 1
             self.status = 'east_run'
         elif keys[pygame.K_LEFT] or keys[pygame.K_a]:
             self.direction.x = -1
             self.status = 'west_run'
-        if self.direction.x == 0 and self.direction.y == 0:
-            # Se a animação atual já termina em '_idle', mantemos o status.
+        if self.direction.x == 0 and self.direction.y == 0:s.
             if not self.status.endswith('_idle'):
-                # Caso contrário, mudamos para o idle correspondente à direção que o jogador estava indo
-                # Ex: 'north_run' vira 'north_idle'
                 self.status = self.status.replace('_run', '_idle')
+                self.frame_index = 0
     def move(self, speed):
         if self.direction.length_squared() != 0:
             self.direction = self.direction.normalize()
