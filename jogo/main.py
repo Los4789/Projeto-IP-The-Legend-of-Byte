@@ -3,14 +3,17 @@ from configuracao import *
 from level import Level
 class Game:
     def __init__(self):
-        pygame.init()
+        pygame.mixer.init() 
+        
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption('The Legend of Byte')
         self.clock = pygame.time.Clock()
         self.level = Level(self.screen)
-        self.game_duration = 60000 # 60 segundos
+        self.game_duration = 60000 
         self.start_time = pygame.time.get_ticks()
         self.game_active = True
+        self.load_music('music/OPRG.ogg')
+        self.play_music()
     def run(self):
         while True:
             for event in pygame.event.get():
