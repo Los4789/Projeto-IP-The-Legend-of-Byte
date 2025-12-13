@@ -9,7 +9,7 @@ class Game:
         self.display_surface = pygame.display.get_surface()
         pygame.display.set_caption('The Legend of Byte')
         self.clock = pygame.time.Clock()
-        self.music_game = 'music/OPRG.ogg'
+        self.music_game = 'music/Chiptune Original.mp3'
         self.music_game_over = 'music/game_over_music.ogg'
         self.start_game()
         try:
