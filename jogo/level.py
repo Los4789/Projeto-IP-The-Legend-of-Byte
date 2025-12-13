@@ -56,8 +56,6 @@ class Level:
                 x = col_index * TILESIZE
                 y = row_index * TILESIZE
                 if cell == 'X':
-                    # Crie Tiles para os limites e adicione aos grupos corretos
-                    # Nota: Certifique-se que a classe Tile tenha sido criada conforme instruído anteriormente
                     Tile((x, y), [self.visible_sprites, self.obstacle_sprites])
                 elif cell == 'C':
                     Coletavel((x, y), 'moeda', [self.visible_sprites, self.collectible_sprites])
