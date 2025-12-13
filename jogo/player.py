@@ -14,9 +14,9 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(center = pos)
         self.hitbox = self.rect.inflate(0, -20) 
         self.direction = pygame.math.Vector2() 
-        self.speed = 5 
+        self.speed = 8 
         #Lógica de Boost
-        self.original_speed = 5
+        self.original_speed = 8
         self.boost_active = False
         self.boost_start_time = 0
         self.boost_duration = 5000 # 5 segundos
