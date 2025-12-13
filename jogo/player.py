@@ -15,7 +15,17 @@ class Player(pygame.sprite.Sprite):
         self.hitbox = self.rect.inflate(0, -20) 
         self.direction = pygame.math.Vector2() 
         self.speed = 5 
+        #Lógica de Boost
+        self.original_speed = 5
+        self.boost_active = False
+        self.boost_start_time = 0
+        self.boost_duration = 5000 # 5 segundos
         self.obstacle_sprites = obstacle_sprites
+    def activate_speed_boost(self):
+        if not self.boost_active:
+            self.boost_active = True
+            self.speed = self.original_speed * 1.5 # Aumenta 50%
+            self.boost_start_time = pygame.time.get_ticks()
     def import_assets(self):
         self.animations = {}
         idle_directions = ['north', 'east', 'west', 'south']
@@ -78,3 +88,7 @@ class Player(pygame.sprite.Sprite):
         self.input()
         self.move(self.speed)
         self.animate()
+        if self.boost_active:
+            if pygame.time.get_ticks() - self.boost_start_time >= self.boost_duration:
+                self.boost_active = False
+                self.speed = self.original_speed
