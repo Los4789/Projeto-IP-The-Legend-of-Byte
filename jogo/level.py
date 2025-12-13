@@ -5,7 +5,9 @@ from player import Player
 from configuracao import *
 from tile import Tile
 import random
-from coletaveis import NOVO_TAMANHO_COLETAVEL 
+from coletaveis import NOVO_TAMANHO_COLETAVEL
+ScoreDefault = 500
+ScoreJoia = 12500
 class CameraGroup(pygame.sprite.Group):
     def __init__(self, map_width, map_height):
         super().__init__()
@@ -122,16 +124,16 @@ class Level:
             if c_type in self.sfx:
                 self.sfx[c_type].play()
             if c_type == 'moeda': # Adiciona tempo ao timer
-                self.score[c_type] += 500 # Adiciona 500 pontos padrão
+                self.score[c_type] += ScoreDefault # Adiciona 500 pontos padrão
                 time_event = pygame.event.Event(ADD_TIME_EVENT, {'amount': TIME_MOEDA_MS})
                 pygame.event.post(time_event)
             elif c_type == 'estrela': # Velocidade temporária (tratada no Player)
-                 self.score[c_type] += 500 # Adiciona 500 pontos padrão
+                 self.score[c_type] += ScoreDefault # Adiciona 500 pontos padrão
                  self.player.activate_speed_boost()
             elif c_type == 'joia': # Adiciona 12500 pontos
-                self.score[c_type] += 12500
+                self.score[c_type] += ScoreJoia
             else: # Caso eu queira adicionar outros coletáveis no futuro
-                self.score[c_type] += 500
+                self.score[c_type] += ScoreDefault
             collectible.kill() 
             self.spawn_new_collectible(c_type)
             print(f"Coletou {c_type}! Score atual: {self.score}")
