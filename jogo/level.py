@@ -9,8 +9,9 @@ class CameraGroup(pygame.sprite.Group):
         super().__init__()
         self.display_surface = pygame.display.get_surface()
         self.offset = pygame.math.Vector2()
-        self.half_w = self.display_surface.get_size() // 2
-        self.half_h = self.display_surface.get_size() // 2
+        screen_width, screen_height = self.display_surface.get_size()
+        self.half_w = screen_width // 2
+        self.half_h = screen_height // 2
         self.floor_surf_original = pygame.image.load('graphics/tilemap/ground.png').convert()
         num_tiles_x = int(map_width / self.floor_surf_original.get_width()) + 1
         num_tiles_y = int(map_height / self.floor_surf_original.get_height()) + 1
