@@ -45,6 +45,11 @@ class Level:
             'X              J          X',
             'X                         X',
             'X                         X',
+            'X                         X',
+            'X                         X',
+            'X                         X',
+            'X                         X',
+            'X                         X',
             'XXXXXXXXXXXXXXXXXXXXXXXXXXX',
         ]
         map_width = len(self.game_map[0]) * TILESIZE
