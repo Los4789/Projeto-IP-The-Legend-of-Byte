@@ -121,15 +121,15 @@ class Level:
             c_type = collectible.type
             if c_type in self.sfx:
                 self.sfx[c_type].play()
-            if c_type == 'moeda': # Adiciona 5s ao timer
+            if c_type == 'moeda': # Adiciona tempo ao timer
                 self.score[c_type] += 500 # Adiciona 500 pontos padrão
                 time_event = pygame.event.Event(ADD_TIME_EVENT, {'amount': TIME_MOEDA_MS})
                 pygame.event.post(time_event)
             elif c_type == 'estrela': # Velocidade temporária (tratada no Player)
                  self.score[c_type] += 500 # Adiciona 500 pontos padrão
                  self.player.activate_speed_boost()
-            elif c_type == 'joia': # Adiciona 5000 pontos
-                self.score[c_type] += 5000
+            elif c_type == 'joia': # Adiciona 12500 pontos
+                self.score[c_type] += 12500
             else: # Caso eu queira adicionar outros coletáveis no futuro
                 self.score[c_type] += 500
             collectible.kill() 
