@@ -107,7 +107,8 @@ class Level:
             c_type = collectible.type
             if c_type == 'moeda': # Adiciona 10s ao timer
                 self.score[c_type] += 500 # Adiciona 500 pontos padrão
-                print("Lembrete: A lógica de adicionar tempo ao timer precisa ser comunicada ao main.py")
+                time_event = pygame.event.Event(ADD_TIME_EVENT, {'amount': TIME_MOEDA_MS})
+                pygame.event.post(time_event)
             elif c_type == 'estrela': # Velocidade temporária (tratada no Player)
                  self.score[c_type] += 500 # Adiciona 500 pontos padrão
                  self.player.activate_speed_boost()
