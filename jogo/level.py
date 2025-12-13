@@ -3,7 +3,7 @@ from ui import UI
 from coletaveis import Coletavel
 from player import Player
 from configuracao import *
-# Camera
+from tile import Tile
 class CameraGroup(pygame.sprite.Group):
     def __init__(self, map_width, map_height):
         super().__init__()
@@ -22,7 +22,7 @@ class CameraGroup(pygame.sprite.Group):
                                                                y * self.floor_surf_original.get_height()))
                 
         self.floor_rect = self.floor_surf.get_rect(topleft = (0, 0))
-     def custom_draw(self, player):
+    def custom_draw(self, player):
         self.offset.x = player.rect.centerx - self.half_w
         self.offset.y = player.rect.centery - self.half_h
         floor_offset_pos = self.floor_rect.topleft - self.offset
@@ -34,9 +34,7 @@ class CameraGroup(pygame.sprite.Group):
 class Level:
     def __init__(self, surface):
         self.display_surface = surface 
-        self.visible_sprites = CameraGroup() 
-        self.collectible_sprites = pygame.sprite.Group()
-        self.obstacle_sprites = pygame.sprite.Group() 
+        
         self.game_map = [
             'XXXXXXXXXXXXXXXXXXXXXXXXXXX',
             'X                         X',
@@ -47,6 +45,14 @@ class Level:
             'X                         X',
             'XXXXXXXXXXXXXXXXXXXXXXXXXXX',
         ]
+        map_width = len(self.game_map[0]) * TILESIZE
+        map_height = len(self.game_map) * TILESIZE
+
+        # Use map_width e map_height na inicialização
+        self.visible_sprites = CameraGroup(map_width, map_height) 
+        
+        self.collectible_sprites = pygame.sprite.Group()
+        self.obstacle_sprites = pygame.sprite.Group() 
         
         self.create_map()
         self.score = {
@@ -55,13 +61,14 @@ class Level:
             'joia': 0
         }
         self.ui = UI()
+        
     def create_map(self):
-        # Iterar sobre o mapa definido acima
         for row_index, row in enumerate(self.game_map):
             for col_index, cell in enumerate(row):
                 x = col_index * TILESIZE
                 y = row_index * TILESIZE
                 if cell == 'X':
+                    # Tile precisa ser importada
                     Tile((x, y), [self.visible_sprites, self.obstacle_sprites])
                 elif cell == 'C':
                     Coletavel((x, y), 'moeda', [self.visible_sprites, self.collectible_sprites])
@@ -86,7 +93,7 @@ class Level:
         for collectible in self.collectible_sprites:
           if collectible.rect.colliderect(self.player.hitbox): 
             self.score[collectible.type] += 1
-            collectible.kill() # Remove o item do jogo e dos grupos
+            collectible.kill() 
             print(f"Coletou {collectible.type}! Score atual: {self.score}")
                 
     def run(self):
