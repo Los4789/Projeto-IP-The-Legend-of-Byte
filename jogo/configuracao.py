@@ -5,6 +5,8 @@ TILESIZE = 64
 UI_FONT = None
 UI_FONT_SIZE = 18
 TEXT_COLOR = '#eeeeee'
+ADD_TIME_EVENT = pygame.USEREVENT + 1 
+TIME_MOEDA_MS = 10000
 #Colocar em level depois
 MAPAMUNDO = [
     ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
