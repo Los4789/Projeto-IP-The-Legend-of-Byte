@@ -120,7 +120,7 @@ class Level:
             c_type = collectible.type
             if c_type in self.sfx:
                 self.sfx[c_type].play()
-            if c_type == 'moeda': # Adiciona 10s ao timer
+            if c_type == 'moeda': # Adiciona 5s ao timer
                 self.score[c_type] += 500 # Adiciona 500 pontos padrão
                 time_event = pygame.event.Event(ADD_TIME_EVENT, {'amount': TIME_MOEDA_MS})
                 pygame.event.post(time_event)
