@@ -88,15 +88,38 @@ class Level:
                         self.obstacle_sprites
                     )
 
-    def check_collisions(self):
+    def spawn_new_collectible(self, c_type):
+        while True:
+            x = random.randint(0, len(self.game_map[0]) * TILESIZE - TILESIZE)
+            y = random.randint(0, len(self.game_map) * TILESIZE - TILESIZE)
+            temp_rect = pygame.Rect(x, y, TILESIZE, TILESIZE)
+            collision_found = False
+            for sprite in self.obstacle_sprites:
+                if sprite.hitbox.colliderect(temp_rect):
+                    collision_found = True
+                    break
+            if not collision_found:
+                Coletavel((x, y), c_type, [self.visible_sprites, self.collectible_sprites])
+                break
+     def check_collisions(self, time_left_seconds):
         for collectible in self.collectible_sprites:
           if collectible.rect.colliderect(self.player.hitbox): 
-            self.score[collectible.type] += 1
+            c_type = collectible.type
+            if c_type == 'moeda': # Adiciona 10s ao timer
+                self.score[c_type] += 500 # Adiciona 500 pontos padrão
+                print("Lembrete: A lógica de adicionar tempo ao timer precisa ser comunicada ao main.py")
+            elif c_type == 'estrela': # Velocidade temporária (tratada no Player)
+                 self.score[c_type] += 500 # Adiciona 500 pontos padrão
+                 self.player.activate_speed_boost()
+            elif c_type == 'joia': # Adiciona 5000 pontos
+                self.score[c_type] += 5000
+            else: # Caso eu queira adicionar outros coletáveis no futuro
+                self.score[c_type] += 500
             collectible.kill() 
-            print(f"Coletou {collectible.type}! Score atual: {self.score}")
-                
-    def run(self):
+            self.spawn_new_collectible(c_type)
+            print(f"Coletou {c_type}! Score atual: {self.score}")
+    def run(self, time_left_seconds):
         self.visible_sprites.update()
         self.visible_sprites.custom_draw(self.player) 
-        self.check_collisions() 
-        self.ui.show_score(self.score)
+        self.check_collisions(time_left_seconds) 
+        self.ui.show_score(self.score, time_left_seconds) 
