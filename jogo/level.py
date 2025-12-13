@@ -103,9 +103,9 @@ class Level:
                     )
     def spawn_new_collectible(self, c_type):
         while True:
-            x = random.randint(0, len(self.game_map[0]) * TILESIZE - TILESIZE)
-            y = random.randint(0, len(self.game_map) * TILESIZE - TILESIZE)
-            temp_rect = pygame.Rect(x, y, TILESIZE, TILESIZE)
+            x = random.randint(0, len(self.game_map[0]) * TILESIZE - NOVO_TAMANHO_COLETAVEL)
+            y = random.randint(0, len(self.game_map) * TILESIZE - NOVO_TAMANHO_COLETAVEL)
+            temp_rect = pygame.Rect(x, y, NOVO_TAMANHO_COLETAVEL, NOVO_TAMANHO_COLETAVEL)
             collision_found = False
             for sprite in self.obstacle_sprites:
                 if sprite.hitbox.colliderect(temp_rect):
