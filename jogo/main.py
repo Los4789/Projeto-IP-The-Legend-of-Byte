@@ -26,7 +26,7 @@ class Game:
     def start_game(self):
         # Método para iniciar/reiniciar o jogo
         self.level = Level(self.screen)
-        self.game_duration = 60000 
+        self.game_duration = 15000 
         self.start_time = pygame.time.get_ticks()
         self.game_active = True
         self.final_score_data = None
