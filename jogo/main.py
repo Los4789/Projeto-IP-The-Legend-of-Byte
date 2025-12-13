@@ -17,6 +17,9 @@ class Game:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
+                if event.type == ADD_TIME_EVENT:
+                    # Tempo
+                    self.start_time += event.amount 
             if self.game_active:
                 current_time = pygame.time.get_ticks()
                 time_left_ms = self.game_duration - (current_time - self.start_time)
