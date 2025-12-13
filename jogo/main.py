@@ -9,32 +9,37 @@ class Game:
         self.display_surface = pygame.display.get_surface()
         pygame.display.set_caption('The Legend of Byte')
         self.clock = pygame.time.Clock()
-        self.level = Level(self.screen)
-        self.game_duration = 60000 
-        self.start_time = pygame.time.get_ticks()
-        self.game_active = True
-        self.load_music('music/OPRG.ogg')
-        self.play_music()
+        self.music_game = 'music/OPRG.ogg'
+        self.music_game_over = 'music/game_over_music.ogg'
+        self.start_game()
         try:
             self.game_over_surf = pygame.image.load('graphics/game_over_screen.png').convert_alpha()
             self.game_over_rect = self.game_over_surf.get_rect(center=(WIDTH/2, HEIGHT/2))
         except pygame.error as e:
             print(f"Erro ao carregar a imagem de Game Over: {e}")
-            self.game_over_surf = None # Fallback caso a imagem não exista
+            self.game_over_surf = None
         try:
-            self.font = pygame.font.Font(UI_FONT, UI_FONT_SIZE * 2) # Use um tamanho de fonte maior para o final
+            self.font = pygame.font.Font(UI_FONT, UI_FONT_SIZE * 2) 
         except FileNotFoundError:
             print(f"Fonte {UI_FONT} não encontrada, usando fonte padrão.")
             self.font = pygame.font.Font(None, UI_FONT_SIZE * 2)
-    def load_music(self, path):
+    def start_game(self):
+        # Método para iniciar/reiniciar o jogo
+        self.level = Level(self.screen)
+        self.game_duration = 60000 
+        self.start_time = pygame.time.get_ticks()
+        self.game_active = True
+        self.final_score_data = None
+        self.play_music(self.music_game, -1, 0.5)
+        pygame.event.clear()
+    def play_music(self, path, loops=-1, volume=0.5):
         try:
             pygame.mixer.music.load(path)
-            print(f"Música {path} carregada com sucesso.")
+            pygame.mixer.music.play(loops)
+            pygame.mixer.music.set_volume(volume)
+            print(f"Tocando música: {path}")
         except pygame.error as e:
-            print(f"Erro ao carregar a música: {e}")
-    def play_music(self):
-        pygame.mixer.music.play(-1)
-        pygame.mixer.music.set_volume(0.5) 
+            print(f"Erro ao carregar ou tocar música {path}: {e}")
     def run(self):
         while True:
             for event in pygame.event.get():
@@ -43,12 +48,13 @@ class Game:
                     pygame.quit()
                     sys.exit()
                 if event.type == ADD_TIME_EVENT:
-                    self.start_time += event.amount
+                    # Só adiciona tempo se o jogo estiver ativo
+                    if self.game_active: 
+                        self.start_time += event.amount
                 if event.type == pygame.KEYDOWN:
                     if not self.game_active:
                         if event.key == pygame.K_r: # Pressionou 'R' para Reiniciar
                             self.start_game()
-                            self.play_music()
                         if event.key == pygame.K_q: # Pressionou 'Q' para Sair
                             pygame.mixer.music.stop()
                             pygame.quit()
@@ -59,7 +65,10 @@ class Game:
                 if time_left_ms <= 0:
                     time_left_ms = 0
                     self.game_active = False 
+                    self.final_score_data = self.level.score 
                     pygame.mixer.music.stop() 
+                    self.play_music(self.music_game_over, -1, 0.6) 
+
                 self.screen.fill('black')
                 self.level.run(int(time_left_ms / 1000))
             else:
@@ -67,7 +76,6 @@ class Game:
                     self.screen.blit(self.game_over_surf, self.game_over_rect)
                 else:
                     self.screen.fill('gray')  
-                # Opcional: Se você quiser desenhar o score final POR CIMA da imagem PNG
                 if self.final_score_data:
                     total_score = sum(self.final_score_data.values())
                     score_text = f'Score Final: {total_score}'
@@ -75,8 +83,6 @@ class Game:
                     score_rect = score_surface.get_rect(center=(WIDTH / 2, HEIGHT / 2 + 100))
                     pygame.draw.rect(self.screen, 'black', score_rect.inflate(10, 10), 0, 5)
                     self.screen.blit(score_surface, score_rect)
-            pygame.display.update()
-            self.clock.tick(FPS)
             pygame.display.update()
             self.clock.tick(FPS)
 if __name__ == '__main__':
