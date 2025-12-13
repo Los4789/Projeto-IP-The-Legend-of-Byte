@@ -80,7 +80,7 @@ class Game:
                     total_score = sum(self.final_score_data.values())
                     score_text = f'Score Final: {total_score}'
                     score_surface = self.font.render(score_text, True, TEXT_COLOR)
-                    score_rect = score_surface.get_rect(topright=(WIDTH - 50, 50))
+                    score_rect = score_surface.get_rect(topright=(WIDTH - 10, 10))
                     pygame.draw.rect(self.screen, 'black', score_rect.inflate(10, 10), 0, 5)
                     self.screen.blit(score_surface, score_rect)
             pygame.display.update()
