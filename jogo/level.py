@@ -4,6 +4,7 @@ from coletaveis import Coletavel
 from player import Player
 from configuracao import *
 from tile import Tile
+import random
 class CameraGroup(pygame.sprite.Group):
     def __init__(self, map_width, map_height):
         super().__init__()
@@ -95,7 +96,6 @@ class Level:
                         [self.visible_sprites], 
                         self.obstacle_sprites
                     )
-
     def spawn_new_collectible(self, c_type):
         while True:
             x = random.randint(0, len(self.game_map[0]) * TILESIZE - TILESIZE)
@@ -109,7 +109,7 @@ class Level:
             if not collision_found:
                 Coletavel((x, y), c_type, [self.visible_sprites, self.collectible_sprites])
                 break
-     def check_collisions(self, time_left_seconds):
+    def check_collisions(self, time_left_seconds):
         for collectible in self.collectible_sprites:
           if collectible.rect.colliderect(self.player.hitbox): 
             c_type = collectible.type
