@@ -34,7 +34,7 @@ class Player(pygame.sprite.Sprite):
             self.frame_index = 0
         self.image = animation[int(self.frame_index)]
         self.rect.center = self.hitbox.center
-  def input(self):
+    def input(self):
         keys = pygame.key.get_pressed()
         
         self.direction.y = 0
