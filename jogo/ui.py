@@ -1,6 +1,5 @@
 import pygame
 from configuracao import *
-from level import ScoreDefault, ScoreJoia
 
 class UI:
     def __init__(self):
