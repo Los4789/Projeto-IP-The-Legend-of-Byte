@@ -134,7 +134,6 @@ class Level:
                 self.score[c_type] += ScoreDefault
             collectible.kill() 
             self.spawn_new_collectible(c_type)
-            print(f"Coletou {c_type}! Score atual: {self.score}")
     def run(self, time_left_seconds):
         self.visible_sprites.update()
         self.visible_sprites.custom_draw(self.player) 
