@@ -51,7 +51,7 @@ class Player(pygame.sprite.Sprite):
         elif keys[pygame.K_LEFT] or keys[pygame.K_a]:
             self.direction.x = -1
             self.status = 'west_run'
-        if self.direction.x == 0 and self.direction.y == 0:s.
+        if self.direction.x == 0 and self.direction.y == 0:
             if not self.status.endswith('_idle'):
                 self.status = self.status.replace('_run', '_idle')
                 self.frame_index = 0
