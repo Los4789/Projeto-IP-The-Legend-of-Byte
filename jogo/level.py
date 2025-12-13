@@ -47,8 +47,6 @@ class Level:
         ]
         map_width = len(self.game_map[0]) * TILESIZE
         map_height = len(self.game_map) * TILESIZE
-
-        # Use map_width e map_height na inicialização
         self.visible_sprites = CameraGroup(map_width, map_height) 
         
         self.collectible_sprites = pygame.sprite.Group()
