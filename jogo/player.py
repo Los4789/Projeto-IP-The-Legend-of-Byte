@@ -25,7 +25,7 @@ class Player(pygame.sprite.Sprite):
             self.animations[f'{direction}_idle'] = [image_surf]
         animation_directions = ['east', 'west', 'north', 'south']
         for direction in animation_directions:
-            folder_path = os.path.join(self.base_path, 'animations', direction)
+            folder_path = os.path.join(self.base_path, 'animations', 'walking-8-frames', direction)
             self.animations[f'{direction}_run'] = import_folder(folder_path)
     def animate(self):
         animation = self.animations[self.status]
