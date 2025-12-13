@@ -6,8 +6,6 @@ from configuracao import *
 from tile import Tile
 import random
 from coletaveis import NOVO_TAMANHO_COLETAVEL
-ScoreDefault = 500
-ScoreJoia = 12500
 class CameraGroup(pygame.sprite.Group):
     def __init__(self, map_width, map_height):
         super().__init__()
