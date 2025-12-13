@@ -5,6 +5,7 @@ from player import Player
 from configuracao import *
 from tile import Tile
 import random
+from coletaveis import NOVO_TAMANHO_COLETAVEL 
 class CameraGroup(pygame.sprite.Group):
     def __init__(self, map_width, map_height):
         super().__init__()
