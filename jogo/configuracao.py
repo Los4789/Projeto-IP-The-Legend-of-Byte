@@ -8,3 +8,5 @@ UI_FONT_SIZE = 18
 TEXT_COLOR = '#eeeeee'
 ADD_TIME_EVENT = pygame.USEREVENT + 1 
 TIME_MOEDA_MS = 1350
+ScoreDefault = 500
+ScoreJoia = 12500
