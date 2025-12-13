@@ -5,7 +5,7 @@ TILESIZE = 64
 UI_FONT = None
 UI_FONT_SIZE = 18
 TEXT_COLOR = '#eeeeee'
-
+#Colocar em level depois
 MAPAMUNDO = [
     ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
     ['x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'],
