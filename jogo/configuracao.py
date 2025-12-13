@@ -1,4 +1,7 @@
 import pygame
+import os
+FONT_PATH = os.path.join('graphics', 'fonts', 'Minercraftory.ttf')
+UI_FONT = FONT_PATH
 WIDTH = 1280
 HEIGHT = 720
 FPS = 60
