@@ -2,7 +2,7 @@ import pygame
 from support import import_folder
 import os
 from configuracao import TILESIZE
-NOVO_TAMANHO_COLETAVEL = TILESIZE * 2 
+NOVO_TAMANHO_COLETAVEL = TILESIZE 
 class Coletavel(pygame.sprite.Sprite):
     def __init__(self, pos, type, groups):
         super().__init__(groups)
