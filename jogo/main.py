@@ -19,7 +19,6 @@ class Game:
             print(f"Erro ao carregar a imagem de Game Over: {e}")
             self.game_over_surf = None
         try:
-            print(f"Tentando carregar fonte de: {os.path.abspath(UI_FONT)}")
             self.font = pygame.font.Font(UI_FONT, UI_FONT_SIZE * 2) 
         except FileNotFoundError:
             print(f"Fonte {UI_FONT} não encontrada, usando fonte padrão.")
