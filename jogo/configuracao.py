@@ -1,6 +1,6 @@
 import pygame
 import os
-FONT_PATH = os.path.join('graphics', 'fonts', 'Minercraftory.ttf')
+FONT_PATH = os.path.join('graphics', 'fonts', 'VCR_OSD_MONO_1.001.ttf')
 UI_FONT = FONT_PATH
 WIDTH = 1280
 HEIGHT = 720
