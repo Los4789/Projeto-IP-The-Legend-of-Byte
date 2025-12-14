@@ -68,9 +68,9 @@ class Level:
         }
         self.ui = UI()
         self.sfx = {
-            'moeda': pygame.mixer.Sound('sound/coin.ogg'),
-            'estrela': pygame.mixer.Sound('sound/star.ogg'),
-            'joia': pygame.mixer.Sound('sound/diamond.ogg')
+            'moeda': pygame.mixer.Sound('sound/coin.wav'),
+            'estrela': pygame.mixer.Sound('sound/star.wav'),
+            'joia': pygame.mixer.Sound('sound/diamond.wav')
         }
         # Ajustar volume dos efeitos, se necessário (0.0 a 1.0)
         for sound in self.sfx.values():
