@@ -58,7 +58,7 @@ class Game:
                     if not self.game_active:
                         if event.key == pygame.K_r: # Pressionou 'R' para Reiniciar
                             self.start_game()
-                        if event.key == pygame.K_q: # Pressionou 'Q' para Sair
+                        if event.key == pygame.K_s: # Pressionou 'S' para Sair
                             pygame.mixer.music.stop()
                             pygame.quit()
                             sys.exit()
