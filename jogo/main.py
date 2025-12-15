@@ -89,6 +89,11 @@ class Game:
                 restart_text = 'R = Recomeçar'
                 restart_surface = self.font.render(restart_text, True, TEXT_COLOR)
                 restart_rect = restart_surface.get_rect(bottomleft=(5, HEIGHT - 5))
+                quit_text = 'Q = Sair'
+                quit_surface = self.font.render(quit_text, True, TEXT_COLOR)
+                quit_rect = quit_surface.get_rect(topleft=(5, 5))
+                pygame.draw.rect(self.screen, 'black', quit_rect.inflate(10, 10), 0, 5)
+                self.screen.blit(quit_surface, quit_rect)
                 pygame.draw.rect(self.screen, 'black', restart_rect.inflate(10, 10), 0, 5)
                 self.screen.blit(restart_surface, restart_rect)
             pygame.display.update()
