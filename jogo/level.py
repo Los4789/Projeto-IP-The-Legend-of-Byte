@@ -94,7 +94,7 @@ class Level:
                     self.player = Player(
                         (x, y), 
                         [self.visible_sprites], 
-                        self.obstacle_sprites # Passe o grupo de obstáculos aqui
+                        self.obstacle_sprites
                     )
         if not hasattr(self, 'player'):
              self.player = Player(
