@@ -132,7 +132,6 @@ while main_menu:
                     MyGame.Run()
     pg.display.update()
 while True: #daqui para baixo é uma protése para o código principal
-    tela.fill((255,0,0))#  <--------------- isso é a tela do jogo
     for event in pg.event.get():
         if event.type == pg.QUIT:
             pg.quit()
