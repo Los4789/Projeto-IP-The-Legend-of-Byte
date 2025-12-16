@@ -16,6 +16,7 @@ class Game:
         self.GameOverSurf = pg.image.load('graphics/game_over_screen.png').convert_alpha()
         self.GameOverRect = self.GameOverSurf.get_rect(center=(WIDTH/2, HEIGHT/2))
         self.Font = pg.font.Font(UI_FONT, UI_FONT_SIZE * 2)
+        self.fullscreen = False
     def Fullscreen(self):
         self.fullscreen = not self.fullscreen
         if self.fullscreen:
@@ -38,21 +39,21 @@ class Game:
         print(f"Tocando música: {Path}")
     def Run(self):
         while True:
-            for Event in pg.event.get():
-                if Event.type == pg.QUIT:
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
                     pg.mixer.music.stop()
                     pg.quit()
                     sys.exit()
-                if Event.type == ADD_TIME_EVENT:
+                if event.type == ADD_TIME_EVENT:
                     if self.GameActive: 
-                        self.StartTime += Event.amount
-                if Event.type == pg.KEYDOWN:
-                    if Event.key == pg.K_f:
+                        self.StartTime += event.amount
+                if event.type == pg.KEYDOWN:
+                    if event.key == pg.K_f:
                         self.Fullscreen()
                     if not self.GameActive:
-                        if Event.key == pg.K_r:
+                        if event.key == pg.K_r:
                             self.StartGame()
-                        if Event.key == pg.K_ESCAPE:
+                        if event.key == pg.K_ESCAPE:
                             pg.mixer.music.stop()
                             pg.quit()
                             sys.exit()
@@ -125,6 +126,8 @@ while main_menu:
             if event.key == pg.K_ESCAPE:
                 pg.quit()
                 exit()
+            if event.key == pg.K_f:
+                self.Fullscreen()
         if event.type == pg.MOUSEBUTTONDOWN:
             if area_clicavel.collidepoint(event.pos):
                 animar_abrir()
