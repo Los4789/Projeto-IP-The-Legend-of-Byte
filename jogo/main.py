@@ -42,7 +42,7 @@ class Game:
                     if not self.GameActive:
                         if Event.key == pygame.K_r:
                             self.StartGame()
-                        if Event.key == pygame.K_s:
+                        if Event.key == pygame.K_ESCAPE:
                             pygame.mixer.music.stop()
                             pygame.quit()
                             sys.exit()
@@ -72,7 +72,7 @@ class Game:
                 RestartText = 'R = Recomeçar'
                 RestartSurface = self.Font.render(RestartText, True, TEXT_COLOR)
                 RestartRect = RestartSurface.get_rect(bottomleft=(5, HEIGHT - 5))
-                QuitText = 'S = Sair'
+                QuitText = 'Esc = Sair'
                 QuitSurface = self.Font.render(QuitText, True, TEXT_COLOR)
                 QuitRect = QuitSurface.get_rect(topleft=(5, 5))
                 pygame.draw.rect(self.Screen, 'black', QuitRect.inflate(10, 10), 0, 5)
