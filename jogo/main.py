@@ -59,7 +59,7 @@ class Game:
                     pygame.mixer.music.stop() 
                     self.PlayMusic(self.MusicGameOver, -1, 0.6) 
                 self.Screen.fill('black')
-                self.Level.run(int(TimeLeftMs / 1000))
+                self.Level.Run(int(TimeLeftMs / 1000))
             else:
                 if self.GameOverSurf:
                     self.Screen.blit(self.GameOverSurf, self.GameOverRect)
