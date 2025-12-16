@@ -55,7 +55,7 @@ class Game:
                 if TimeLeftMs <= 0:
                     TimeLeftMs = 0
                     self.GameActive = False 
-                    self.FinalScoreData = self.Level.score 
+                    self.FinalScoreData = self.Level.Score 
                     pygame.mixer.music.stop() 
                     self.PlayMusic(self.MusicGameOver, -1, 0.6) 
                 self.Screen.fill('black')
