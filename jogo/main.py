@@ -15,7 +15,14 @@ class Game:
         self.StartGame()
         self.GameOverSurf = pg.image.load('graphics/game_over_screen.png').convert_alpha()
         self.GameOverRect = self.GameOverSurf.get_rect(center=(WIDTH/2, HEIGHT/2))
-        self.Font = pg.font.Font(UI_FONT, UI_FONT_SIZE * 2) 
+        self.Font = pg.font.Font(UI_FONT, UI_FONT_SIZE * 2)
+    def Fullscreen(self):
+        self.fullscreen = not self.fullscreen
+        if self.fullscreen:
+            self.Screen = pg.display.set_mode((WIDTH, HEIGHT), pg.FULLSCREEN)
+        else:
+            self.Screen = pg.display.set_mode((WIDTH, HEIGHT))
+        self.DisplaySurface = pg.display.get_surface()
     def StartGame(self):
         self.Level = Level(self.Screen)
         self.GameDuration = 15000 
@@ -40,6 +47,8 @@ class Game:
                     if self.GameActive: 
                         self.StartTime += Event.amount
                 if Event.type == pg.KEYDOWN:
+                    if Event.key == pg.K_f:
+                        self.Fullscreen()
                     if not self.GameActive:
                         if Event.key == pg.K_r:
                             self.StartGame()
