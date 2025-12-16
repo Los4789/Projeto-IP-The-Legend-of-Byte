@@ -11,4 +11,4 @@ TEXT_COLOR = '#eeeeee'
 ADD_TIME_EVENT = pygame.USEREVENT + 1 
 TIME_MOEDA_MS = 2000
 ScoreDefault = 500
-ScoreJoia = 12500
+ScoreJoia = 15000
