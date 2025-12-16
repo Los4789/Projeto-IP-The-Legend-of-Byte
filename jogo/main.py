@@ -3,20 +3,20 @@ from configuracao import *
 from level import Level
 pg = pygame
 class Game:
-    def __init__(self):
+    def __init__(self, display_flags):
         pg.mixer.init() 
         pg.init()
-        self.Screen = pg.display.set_mode((WIDTH, HEIGHT))
+        self.Screen = pg.display.set_mode((WIDTH, HEIGHT), display_flags)
         self.DisplaySurface = pg.display.get_surface()
         pg.display.set_caption('The Legend of Byte')
         self.Clock = pg.time.Clock()
         self.MusicGame = 'music/Chiptune Original.mp3'
         self.MusicGameOver = 'music/game_over_music.ogg'
+        self.fullscreen = bool(display_flags & pg.FULLSCREEN)
         self.StartGame()
         self.GameOverSurf = pg.image.load('graphics/game_over_screen.png').convert_alpha()
-        self.GameOverRect = self.GameOverSurf.get_rect(center=(WIDTH/2, HEIGHT/2))
+        self.GameOverRect = self.GameOverSurf.get_rect(center=(self.Screen.get_width()/2, self.Screen.get_height()/2))
         self.Font = pg.font.Font(UI_FONT, UI_FONT_SIZE * 2)
-        self.fullscreen = False
     def Fullscreen(self):
         self.fullscreen = not self.fullscreen
         if self.fullscreen:
@@ -24,6 +24,7 @@ class Game:
         else:
             self.Screen = pg.display.set_mode((WIDTH, HEIGHT))
         self.DisplaySurface = pg.display.get_surface()
+        self.GameOverRect = self.GameOverSurf.get_rect(center=(self.Screen.get_width()/2, self.Screen.get_height()/2))
     def StartGame(self):
         self.Level = Level(self.Screen)
         self.GameDuration = 15000 
@@ -137,14 +138,16 @@ while main_menu:
                 animar_abrir()
                 main_menu = False
                 if __name__ == '__main__':
-                    MyGame = Game()
+                    current_flags = tela.get_flags()
+                    MyGame = Game(current_flags)
                     MyGame.Run()
         elif event.type == pg.KEYDOWN:
             if event.key == pg.K_RETURN:
                 animar_abrir()
                 main_menu = False
                 if __name__ == '__main__':
-                    MyGame = Game()
+                    current_flags = tela.get_flags()
+                    MyGame = Game(current_flags)
                     MyGame.Run()
     pg.display.update()
 while True: #daqui para baixo é uma protése para o código principal
