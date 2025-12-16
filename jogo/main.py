@@ -24,13 +24,10 @@ class Game:
         self.PlayMusic(self.MusicGame, -1, 0.5)
         pygame.event.clear()
     def PlayMusic(self, Path, Loops=-1, Volume=0.5):
-        try:
-            pygame.mixer.music.load(Path)
-            pygame.mixer.music.play(Loops)
-            pygame.mixer.music.set_volume(Volume)
-            print(f"Tocando música: {Path}")
-        except pygame.error as e:
-            print(f"Erro ao carregar ou tocar música {Path}: {e}")
+        pygame.mixer.music.load(Path)
+        pygame.mixer.music.play(Loops)
+        pygame.mixer.music.set_volume(Volume)
+        print(f"Tocando música: {Path}")
     def Run(self):
         while True:
             for Event in pygame.event.get():
