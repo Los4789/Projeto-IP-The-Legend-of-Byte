@@ -77,12 +77,12 @@ class Game:
                     TotalScore = sum(self.FinalScoreData.values())
                     ScoreText = f'Score Final: {TotalScore}'
                     ScoreSurface = self.Font.render(ScoreText, True, TEXT_COLOR)
-                    ScoreRect = ScoreSurface.get_rect(topright=(WIDTH - 10, 10))
+                    ScoreRect = ScoreSurface.get_rect(topright=(self.Screen.get_width() - 10, 10))
                     pg.draw.rect(self.Screen, 'black', ScoreRect.inflate(10, 10), 0, 5)
                     self.Screen.blit(ScoreSurface, ScoreRect)
                 RestartText = 'R = Recomeçar'
                 RestartSurface = self.Font.render(RestartText, True, TEXT_COLOR)
-                RestartRect = RestartSurface.get_rect(bottomleft=(5, HEIGHT - 5))
+                RestartRect = RestartSurface.get_rect(bottomleft=(5, self.Screen.get_height() - 5))
                 QuitText = 'Esc = Sair'
                 QuitSurface = self.Font.render(QuitText, True, TEXT_COLOR)
                 QuitRect = QuitSurface.get_rect(topleft=(5, 5))
@@ -117,7 +117,6 @@ area_clicavel = pg.draw.rect(tela, (0,0,0), (centro[0]-65, centro[1]-33, 130, 56
 while main_menu:
     tela.blit(tela_inicial, (0, 0))
     tela.blit(botao, (centro[0]-100, centro[1]-85))
-    #só coloquei o lance de poder sair apertando "ESC"
     for event in pg.event.get():
         if event.type == pg.QUIT:
             pg.quit()
@@ -127,7 +126,12 @@ while main_menu:
                 pg.quit()
                 exit()
             if event.key == pg.K_f:
-                self.Fullscreen()
+                 if tela.get_flags() & pg.FULLSCREEN:
+                    tela = pg.display.set_mode((WIDTH, HEIGHT))
+                 else:
+                    tela = pg.display.set_mode((WIDTH, HEIGHT), pg.FULLSCREEN)
+                 telaa = tela.get_rect(); centro = telaa.center
+                 area_clicavel = pg.draw.rect(tela, (0,0,0), (centro[0]-65, centro[1]-33, 130, 56))
         if event.type == pg.MOUSEBUTTONDOWN:
             if area_clicavel.collidepoint(event.pos):
                 animar_abrir()
