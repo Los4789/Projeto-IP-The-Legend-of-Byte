@@ -67,7 +67,7 @@ class Game:
                     self.FinalScoreData = self.Level.Score 
                     pg.mixer.music.stop() 
                     self.PlayMusic(self.MusicGameOver, -1, 0.6) 
-                self.Screen.fill('black')
+                self.Screen.blit(tela_game, (0,0))
                 self.Level.Run(int(TimeLeftMs / 1000))
             else:
                 if self.GameOverSurf:
@@ -110,6 +110,7 @@ def animar_abrir():
         pg.draw.rect(tela, (255,255,255), (centro[0]-(iterador//2), centro[1]-(iterador//2),iterador,iterador))
         pg.display.update()
 
+tela_game = pg.image.load('graphics/foto pronta.png').convert()
 tela_inicial = pg.image.load('graphics/fundo.png').convert()
 botao = pg.image.load('graphics/botao.png').convert_alpha()
 botao = pg.transform.scale(botao, (200,160))
