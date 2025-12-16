@@ -49,8 +49,8 @@ class Level:
             'X                         X',
             'XXXXXXXXXXXXXXXXXXXXXXXXXXX',
         ]
-        MapWidth = len(self.GameMap[0]) * TILESIZE
-        MapHeight = len(self.GameMap) * TILESIZE
+        MapWidth = (len(self.GameMap[0]) * TILESIZE) - 8
+        MapHeight = (len(self.GameMap) * TILESIZE) - 8
         self.VisibleSprites = CameraGroup(MapWidth, MapHeight) 
         self.CollectibleSprites = pygame.sprite.Group()
         self.ObstacleSprites = pygame.sprite.Group() 
