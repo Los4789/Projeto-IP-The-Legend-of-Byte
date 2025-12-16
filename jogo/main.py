@@ -110,8 +110,8 @@ def animar_abrir():
         pg.draw.rect(tela, (255,255,255), (centro[0]-(iterador//2), centro[1]-(iterador//2),iterador,iterador))
         pg.display.update()
 
-tela_inicial = pg.image.load('fundo.png').convert()
-botao = pg.image.load('botao.png').convert_alpha()
+tela_inicial = pg.image.load('graphics/fundo.png').convert()
+botao = pg.image.load('graphics/botao.png').convert_alpha()
 botao = pg.transform.scale(botao, (200,160))
 area_clicavel = pg.draw.rect(tela, (0,0,0), (centro[0]-65, centro[1]-33, 130, 56))
 
