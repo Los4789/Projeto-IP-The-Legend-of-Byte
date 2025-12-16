@@ -98,7 +98,7 @@ class Game:
 pg.init()
 tela = pg.display.set_mode((WIDTH, HEIGHT))
 telaa = tela.get_rect(); centro = telaa.center
-pg.display.set_caption("jogo")
+pg.display.set_caption("The Legend of Byte - Menu Principal")
 main_menu = True; opacidade = 255
 mascara = pg.Surface((1280, 720)); mascara.fill((255,255,255))
 
