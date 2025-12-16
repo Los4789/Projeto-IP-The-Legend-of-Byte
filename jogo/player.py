@@ -24,7 +24,7 @@ class Player(pygame.sprite.Sprite):
     def activate_speed_boost(self):
         if not self.boost_active:
             self.boost_active = True
-            self.speed = self.original_speed * 1.7 # Aumenta 70%
+            self.speed = self.original_speed * 1.6 # Aumenta 60%
             self.boost_start_time = pygame.time.get_ticks()
     def import_assets(self):
         self.animations = {}
