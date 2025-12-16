@@ -12,22 +12,10 @@ class Game:
         self.music_game = 'music/Chiptune Original.mp3'
         self.music_game_over = 'music/game_over_music.ogg'
         self.start_game()
-        try:
-            self.game_over_surf = pygame.image.load('graphics/game_over_screen.png').convert_alpha()
-            self.game_over_rect = self.game_over_surf.get_rect(center=(WIDTH/2, HEIGHT/2))
-        except pygame.error as e:
-            print(f"Erro ao carregar a imagem de Game Over: {e}")
-            self.game_over_surf = None
-        try:
-            self.font = pygame.font.Font(UI_FONT, UI_FONT_SIZE * 2) 
-        except FileNotFoundError:
-            print(f"Fonte {UI_FONT} não encontrada, usando fonte padrão.")
-            self.font = pygame.font.Font(None, UI_FONT_SIZE * 2)
-        except pygame.error as e:
-            print(f"Erro do Pygame ao carregar fonte: {e}")
-            self.font = pygame.font.Font(None, UI_FONT_SIZE * 2)
+        self.game_over_surf = pygame.image.load('graphics/game_over_screen.png').convert_alpha()
+        self.game_over_rect = self.game_over_surf.get_rect(center=(WIDTH/2, HEIGHT/2))
+        self.font = pygame.font.Font(UI_FONT, UI_FONT_SIZE * 2) 
     def start_game(self):
-        # Método para iniciar/reiniciar o jogo
         self.level = Level(self.screen)
         self.game_duration = 15000 
         self.start_time = pygame.time.get_ticks()
@@ -56,9 +44,9 @@ class Game:
                         self.start_time += event.amount
                 if event.type == pygame.KEYDOWN:
                     if not self.game_active:
-                        if event.key == pygame.K_r: # Pressionou 'R' para Reiniciar
+                        if event.key == pygame.K_r:
                             self.start_game()
-                        if event.key == pygame.K_s: # Pressionou 'S' para Sair
+                        if event.key == pygame.K_s:
                             pygame.mixer.music.stop()
                             pygame.quit()
                             sys.exit()
@@ -71,7 +59,6 @@ class Game:
                     self.final_score_data = self.level.score 
                     pygame.mixer.music.stop() 
                     self.play_music(self.music_game_over, -1, 0.6) 
-
                 self.screen.fill('black')
                 self.level.run(int(time_left_ms / 1000))
             else:
