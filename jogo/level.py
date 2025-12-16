@@ -6,39 +6,35 @@ from configuracao import *
 from tile import Tile
 import random
 from coletaveis import NOVO_TAMANHO_COLETAVEL
-class CameraGroup(pygame.sprite.Group):
-    def __init__(self, map_width, map_height):
-        super().__init__()
-        self.display_surface = pygame.display.get_surface()
-        self.offset = pygame.math.Vector2()
-        screen_width, screen_height = self.display_surface.get_size()
-        self.half_w = screen_width // 2
-        self.half_h = screen_height // 2
-        self.floor_surf_original = pygame.image.load('graphics/tilemap/ground.png').convert()
-        num_tiles_x = int(map_width / self.floor_surf_original.get_width()) + 1
-        num_tiles_y = int(map_height / self.floor_surf_original.get_height()) + 1
-        self.floor_surf = pygame.Surface((num_tiles_x * self.floor_surf_original.get_width(), 
-                                          num_tiles_y * self.floor_surf_original.get_height()))
-        for x in range(num_tiles_x):
-            for y in range(num_tiles_y):
-                self.floor_surf.blit(self.floor_surf_original, (x * self.floor_surf_original.get_width(), 
-                                                               y * self.floor_surf_original.get_height()))
-                
-        self.floor_rect = self.floor_surf.get_rect(topleft = (0, 0))
-    def custom_draw(self, player):
-        self.offset.x = player.rect.centerx - self.half_w
-        self.offset.y = player.rect.centery - self.half_h
-        floor_offset_pos = self.floor_rect.topleft - self.offset
-        self.display_surface.blit(self.floor_surf, floor_offset_pos)
-        for sprite in sorted(self.sprites(), key=lambda sprite: sprite.rect.centery):
-            offset_pos = sprite.rect.topleft - self.offset
-            self.display_surface.blit(sprite.image, offset_pos)
 
+class CameraGroup(pygame.sprite.Group):
+    def __init__(self, MapWidth, MapHeight):
+        super().__init__()
+        self.DisplaySurface = pygame.display.get_surface()
+        self.Offset = pygame.math.Vector2()
+        ScreenWidth, ScreenHeight = self.DisplaySurface.get_size()
+        self.HalfW = ScreenWidth // 2
+        self.HalfH = ScreenHeight // 2
+        self.FloorSurfOriginal = pygame.image.load('graphics/tilemap/ground.png').convert()
+        NumTilesX = int(MapWidth / self.FloorSurfOriginal.get_width()) + 1
+        NumTilesY = int(MapHeight / self.FloorSurfOriginal.get_height()) + 1
+        self.FloorSurf = pygame.Surface((NumTilesX * self.FloorSurfOriginal.get_width(), NumTilesY * self.FloorSurfOriginal.get_height()))
+        for X in range(NumTilesX):
+            for Y in range(NumTilesY):
+                self.FloorSurf.blit(self.FloorSurfOriginal, (X * self.FloorSurfOriginal.get_width(), Y * self.FloorSurfOriginal.get_height()))
+        self.FloorRect = self.FloorSurf.get_rect(topleft = (0, 0))
+    def CustomDraw(self, Player):
+        self.Offset.x = Player.rect.centerx - self.HalfW
+        self.Offset.y = Player.rect.centery - self.HalfH
+        FloorOffsetPos = self.FloorRect.topleft - self.Offset
+        self.DisplaySurface.blit(self.FloorSurf, FloorOffsetPos)
+        for Sprite in sorted(self.sprites(), key=lambda Sprite: Sprite.rect.centery):
+            OffsetPos = Sprite.rect.topleft - self.Offset
+            self.DisplaySurface.blit(Sprite.image, OffsetPos)
 class Level:
-    def __init__(self, surface):
-        self.display_surface = surface 
-        
-        self.game_map = [
+    def __init__(self, Surface):
+        self.DisplaySurface = Surface 
+        self.GameMap = [
             'XXXXXXXXXXXXXXXXXXXXXXXXXXX',
             'X                         X',
             'X    C         E          X',
@@ -53,89 +49,92 @@ class Level:
             'X                         X',
             'XXXXXXXXXXXXXXXXXXXXXXXXXXX',
         ]
-        map_width = len(self.game_map[0]) * TILESIZE
-        map_height = len(self.game_map) * TILESIZE
-        self.visible_sprites = CameraGroup(map_width, map_height) 
+        MapWidth = len(self.GameMap[0]) * TILESIZE
+        MapHeight = len(self.GameMap) * TILESIZE
+        self.VisibleSprites = CameraGroup(MapWidth, MapHeight) 
+        self.CollectibleSprites = pygame.sprite.Group()
+        self.ObstacleSprites = pygame.sprite.Group() 
         
-        self.collectible_sprites = pygame.sprite.Group()
-        self.obstacle_sprites = pygame.sprite.Group() 
-        
-        self.create_map()
-        self.score = {
+        self.CreateMap()
+        self.Score = {
             'moeda': 0,
             'estrela': 0,
             'joia': 0
         }
-        self.ui = UI()
-        self.sfx = {
+        self.Ui = UI()
+        self.Sfx = {
             'moeda': pygame.mixer.Sound('sound/coin.wav'),
             'estrela': pygame.mixer.Sound('sound/star.wav'),
             'joia': pygame.mixer.Sound('sound/diamond.wav')
         }
-        # Ajustar volume dos efeitos, se necessário (0.0 a 1.0)
-        for sound in self.sfx.values():
-            sound.set_volume(0.5)
+        
+        for Sound in self.Sfx.values():
+            Sound.set_volume(0.5)
 
-    def create_map(self):
-        for row_index, row in enumerate(self.game_map):
-            for col_index, cell in enumerate(row):
-                x = col_index * TILESIZE
-                y = row_index * TILESIZE
-                if cell == 'X':
-                    # Tile precisa ser importada
-                    Tile((x, y), [self.visible_sprites, self.obstacle_sprites])
-                elif cell == 'C':
-                    Coletavel((x, y), 'moeda', [self.visible_sprites, self.collectible_sprites])
-                elif cell == 'E':
-                    Coletavel((x, y), 'estrela', [self.visible_sprites, self.collectible_sprites])
-                elif cell == 'J':
-                    Coletavel((x, y), 'joia', [self.visible_sprites, self.collectible_sprites])
-                elif cell == 'P':
-                    self.player = Player(
-                        (x, y), 
-                        [self.visible_sprites], 
-                        self.obstacle_sprites
+    def CreateMap(self):
+        for RowIndex, Row in enumerate(self.GameMap):
+            for ColIndex, Cell in enumerate(Row):
+                X = ColIndex * TILESIZE
+                Y = RowIndex * TILESIZE
+                if Cell == 'X':
+                    Tile((X, Y), [self.VisibleSprites, self.ObstacleSprites])
+                elif Cell == 'C':
+                    Coletavel((X, Y), 'moeda', [self.VisibleSprites, self.CollectibleSprites])
+                elif Cell == 'E':
+                    Coletavel((X, Y), 'estrela', [self.VisibleSprites, self.CollectibleSprites])
+                elif Cell == 'J':
+                    Coletavel((X, Y), 'joia', [self.VisibleSprites, self.CollectibleSprites])
+                elif Cell == 'P':
+                    self.Player = Player(
+                        (X, Y), 
+                        [self.VisibleSprites], 
+                        self.ObstacleSprites
                     )
-        if not hasattr(self, 'player'):
-             self.player = Player(
+        if not hasattr(self, 'Player'):
+             self.Player = Player(
                         (WIDTH/2, HEIGHT/2), 
-                        [self.visible_sprites], 
-                        self.obstacle_sprites
+                        [self.VisibleSprites], 
+                        self.ObstacleSprites
                     )
-    def spawn_new_collectible(self, c_type):
+
+    def SpawnNewCollectible(self, CType):
         while True:
-            x = random.randint(0, len(self.game_map[0]) * TILESIZE - NOVO_TAMANHO_COLETAVEL)
-            y = random.randint(0, len(self.game_map) * TILESIZE - NOVO_TAMANHO_COLETAVEL)
-            temp_rect = pygame.Rect(x, y, NOVO_TAMANHO_COLETAVEL, NOVO_TAMANHO_COLETAVEL)
-            collision_found = False
-            for sprite in self.obstacle_sprites:
-                if sprite.hitbox.colliderect(temp_rect):
-                    collision_found = True
+            X = random.randint(0, len(self.GameMap[0]) * TILESIZE - NOVO_TAMANHO_COLETAVEL)
+            Y = random.randint(0, len(self.GameMap) * TILESIZE - NOVO_TAMANHO_COLETAVEL)
+            TempRect = pygame.Rect(X, Y, NOVO_TAMANHO_COLETAVEL, NOVO_TAMANHO_COLETAVEL)
+            CollisionFound = False
+            for Sprite in self.ObstacleSprites:
+                if Sprite.hitbox.colliderect(TempRect):
+                    CollisionFound = True
                     break
-            if not collision_found:
-                Coletavel((x, y), c_type, [self.visible_sprites, self.collectible_sprites])
+            if not CollisionFound:
+                Coletavel((X, Y), CType, [self.VisibleSprites, self.CollectibleSprites])
                 break
-    def check_collisions(self, time_left_seconds):
-        for collectible in self.collectible_sprites:
-          if collectible.rect.colliderect(self.player.hitbox): 
-            c_type = collectible.type
-            if c_type in self.sfx:
-                self.sfx[c_type].play()
-            if c_type == 'moeda': # Adiciona tempo ao timer
-                self.score[c_type] += ScoreDefault # Adiciona 500 pontos padrão
-                time_event = pygame.event.Event(ADD_TIME_EVENT, {'amount': TIME_MOEDA_MS})
-                pygame.event.post(time_event)
-            elif c_type == 'estrela': # Velocidade temporária (tratada no Player)
-                 self.score[c_type] += ScoreDefault # Adiciona 500 pontos padrão
-                 self.player.activate_speed_boost()
-            elif c_type == 'joia': # Adiciona 12500 pontos
-                self.score[c_type] += ScoreJoia
-            else: # Caso eu queira adicionar outros coletáveis no futuro
-                self.score[c_type] += ScoreDefault
-            collectible.kill() 
-            self.spawn_new_collectible(c_type)
-    def run(self, time_left_seconds):
-        self.visible_sprites.update()
-        self.visible_sprites.custom_draw(self.player) 
-        self.check_collisions(time_left_seconds) 
-        self.ui.show_score(self.score, time_left_seconds) 
+
+    def CheckCollisions(self, TimeLeftSeconds):
+        for Collectible in self.CollectibleSprites:
+          if Collectible.rect.colliderect(self.Player.hitbox): 
+            CType = Collectible.type
+            if CType in self.Sfx:
+                self.Sfx[CType].play()
+            
+            if CType == 'moeda':
+                self.Score[CType] += ScoreDefault
+                TimeEvent = pygame.event.Event(ADD_TIME_EVENT, {'amount': TIME_MOEDA_MS})
+                pygame.event.post(TimeEvent)
+            elif CType == 'estrela':
+                 self.Score[CType] += ScoreDefault
+                 self.Player.activate_speed_boost()
+            elif CType == 'joia':
+                self.Score[CType] += ScoreJoia
+            else:
+                self.Score[CType] += ScoreDefault
+            
+            Collectible.kill() 
+            self.SpawnNewCollectible(CType)
+
+    def Run(self, TimeLeftSeconds):
+        self.VisibleSprites.update()
+        self.VisibleSprites.CustomDraw(self.Player) 
+        self.CheckCollisions(TimeLeftSeconds) 
+        self.Ui.show_score(self.Score, TimeLeftSeconds)
